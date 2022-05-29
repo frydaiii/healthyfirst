@@ -1,3 +1,4 @@
 .ssh
 .idea
+__pycache__
 healthyfirst/secret.py
