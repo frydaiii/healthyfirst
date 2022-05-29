@@ -1,2 +1,5 @@
 django~=4.0.4
 djangorestframework~=3.13.1
+mysqlclient
+rest_framework_simplejwt
+cryptography
