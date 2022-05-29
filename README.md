@@ -3,22 +3,29 @@
 ### api/users/
 * method POST
 * body x-www-form-urlencoded
+  * id
   * username
   * password
+  * password2
+  * first_name
+  * last_name
+  * role: "MN" or "ST"
+  * id_area
+  * email
 * return 
 ```json
 {
     "username": "",
     "email": "",
-    "groups": []
+    "groups": [], 
+    "first_name": "",
+    "last_name":  "",
+    "role": "",
+    "id_area": ""
 }
 ```
-## Get user information
-### api/users/[username]
-* method GET
-* header Authorization Bearer jwt_token
 ## Login
-* api/token
+### api/token/
 * method POST
 * body x-www-form-urlencoded
   * username
@@ -31,7 +38,7 @@
 }
 ```
 ## Get new access token
-* api/token/refresh 
+* api/token/refresh/
 * method POST
 * body x-www-form-urlencoded
   * refresh
@@ -41,3 +48,28 @@
   "access": "jwt_token"
 }
 ```
+## Get user information
+### api/users/[username]
+* method GET
+* header Authorization Bearer jwt_token
+* return
+```json
+{
+    "username": "",
+    "email": "",
+    "groups": [],
+    "first_name": "",
+    "last_name": "",
+    "role": "",
+    "id_area": ""
+}
+```
+## Delete non-manager user
+### api/users/[username]/
+* method DELETE
+* header Authorization Bearer jwt_token
+## Update user information
+### api/users/[username]/
+* method PATCH
+* header Authorization Bearer jwt_token
+* body is fields that needed to update
