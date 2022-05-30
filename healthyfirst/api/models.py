@@ -28,7 +28,7 @@ class Certificate(base_models.Model):
     id_business_type = base_models.IntegerField()
     issued_date = base_models.DateField(auto_now=True)
     expired_date = base_models.DateField()
-    serie = base_models.CharField(max_length=10)
+    series = base_models.CharField(max_length=10)
 
 
 class BusinessType(base_models.Model):
