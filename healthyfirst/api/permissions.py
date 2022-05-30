@@ -18,10 +18,6 @@ class PersonPermission(permissions.BasePermission):
         if view.action == 'delete' or request.user.username != obj.username:
             return False
         if view.action in ('update', 'partial_update'):
-            if (
-                request.data['username'] or
-                request.data['id_area'] or
-                request.data['is_manager']
-            ):
+            if any(k in request.data for k in ('username', 'id_area', 'is_manager')):
                 return False
         return True
