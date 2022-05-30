@@ -16,7 +16,7 @@ class PersonSerializer(serializers.ModelSerializer):
             'last_name',
             'password',
             'password2',
-            'role',
+            'is_manager',
             'id_area'
         ]
 
@@ -41,7 +41,7 @@ class PersonSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            role=validated_data['role'],
+            is_manager=(validated_data['is_manager'] == 1),
             id_area=validated_data['id_area'],
         )
 

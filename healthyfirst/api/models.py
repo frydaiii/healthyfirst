@@ -3,20 +3,9 @@ from django.db import models as base_models
 
 
 class Person(auth_models.AbstractUser):
-    MANAGER = 'MN'
-    STAFF = 'ST'
-    ROLE = [
-        (MANAGER, 'Manager'),
-        (STAFF, 'Staff'),
-    ]
 
-    role = base_models.CharField(max_length=2, choices=ROLE, default=STAFF)
+    is_manager = base_models.BooleanField(default=False)
     id_area = base_models.IntegerField()
-
-    def is_manager(self):
-        if self.role == self.MANAGER:
-            return True
-        return False
 
     def save(self, *args, **kwargs):
         self.full_clean(exclude=['password'])

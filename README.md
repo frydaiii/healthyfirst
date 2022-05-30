@@ -3,13 +3,12 @@
 ### api/users/
 * method POST
 * body x-www-form-urlencoded
-  * id
   * username
   * password
   * password2
   * first_name
   * last_name
-  * role: "MN" or "ST"
+  * is_manager: 0 or 1
   * id_area
   * email
 * return 
@@ -20,7 +19,7 @@
     "groups": [], 
     "first_name": "",
     "last_name":  "",
-    "role": "",
+    "is_manager": "",
     "id_area": ""
 }
 ```
@@ -60,7 +59,7 @@
     "groups": [],
     "first_name": "",
     "last_name": "",
-    "role": "",
+    "is_manager": "",
     "id_area": ""
 }
 ```
