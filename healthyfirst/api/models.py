@@ -13,18 +13,17 @@ class Person(auth_models.AbstractUser):
 
 
 class Premise(base_models.Model):
-    id = base_models.IntegerField(primary_key=True)
+    # id = base_models.IntegerField(primary_key=True)
     name = base_models.CharField(max_length=255)
     address = base_models.CharField(max_length=255)
-    sub_district = base_models.CharField(max_length=255)
-    district = base_models.CharField(max_length=255)
     phone_number = base_models.IntegerField()
+    id_area = base_models.IntegerField(default=0)
     id_business_type = base_models.IntegerField()
-    id_certificate = base_models.IntegerField()
+    id_certificate = base_models.IntegerField(blank=True, null=True)
 
 
 class Certificate(base_models.Model):
-    id = base_models.IntegerField(primary_key=True)
+    # id = base_models.IntegerField(primary_key=True)
     id_business_type = base_models.IntegerField()
     issued_date = base_models.DateField(auto_now=True)
     expired_date = base_models.DateField()
@@ -32,22 +31,22 @@ class Certificate(base_models.Model):
 
 
 class BusinessType(base_models.Model):
-    id = base_models.IntegerField(primary_key=True)
+    # id = base_models.IntegerField(primary_key=True)
     name = base_models.CharField(max_length=50)
     description = base_models.CharField(max_length=255)
 
 
 class InspectionPlan(base_models.Model):
-    id = base_models.IntegerField(primary_key=True)
+    # id = base_models.IntegerField(primary_key=True)
     inspection_date = base_models.DateField()
     sample_needed = base_models.BooleanField(default=False)
     violate = base_models.BooleanField(default=False)
     id_premise = base_models.IntegerField()
-    id_sample = base_models.IntegerField()
+    id_sample = base_models.IntegerField(null=True)
 
 
 class Sample(base_models.Model):
-    id = base_models.IntegerField(primary_key=True)
+    # id = base_models.IntegerField(primary_key=True)
     id_premise = base_models.IntegerField()
     accreditation_premise = base_models.CharField(max_length=255)
     accreditation_status = base_models.CharField(max_length=255)
@@ -56,6 +55,6 @@ class Sample(base_models.Model):
 
 
 class Area(base_models.Model):
-    id = base_models.IntegerField(primary_key=True)
+    # id = base_models.IntegerField(primary_key=True)
     name = base_models.CharField(max_length=255)
     type = base_models.CharField(max_length=255)

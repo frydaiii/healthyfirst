@@ -22,7 +22,13 @@ from rest_framework_simplejwt.views import (
 )
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet, basename='users')
+router.register(r'users', views.PersonViewSet, basename='users')
+router.register(r'premises', views.PremiseViewSet, basename='premises')
+router.register(r'certificate', views.CertificateViewSet, basename='certificate')
+router.register(r'businesstype', views.BusinessTypeViewSet, basename='businesstype')
+router.register(r'inspectionplan', views.InspectionPlanViewSet, basename='inspectionplan')
+router.register(r'sample', views.SampleViewSet, basename='sample')
+router.register(r'area', views.AreaViewSet, basename='area')
 
 urlpatterns = [
     path('api/', include(router.urls)),

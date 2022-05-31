@@ -2,7 +2,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from healthyfirst.api.models import Person
+from healthyfirst.api.models import Person, Certificate, Premise, BusinessType, InspectionPlan, Sample, Area
 
 
 class PersonSerializer(serializers.ModelSerializer):
@@ -50,11 +50,100 @@ class PersonSerializer(serializers.ModelSerializer):
 
         return user
 
-    # def update(self, instance, validated_data):
-    #     instance.email = validated_data.get('email', instance.email)
-    #     # instance.content = validated_data.get('first', instance.content)
-    #     # instance.created = validated_data.get('created', instance.created)
-    #     instance.save()
-    #     return instance
 
+class PremiseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Premise
+        fields = [
+            'id',
+            'name',
+            'address',
+            'phone_number',
+            'id_area',
+            'id_business_type',
+            'id_certificate',
+        ]
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'id_certificate': {'required': False},
+        }
+
+    def create(self, validated_data):
+        if 'id_certificate' in validated_data:
+            validated_data.pop('id_certificate')
+        return super().create(validated_data)
+
+
+class CertificateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Certificate
+        fields = [
+            'id',
+            'id_business_type',
+            'issued_date',
+            'expired_date',
+            'series',
+        ]
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'issued_date': {'read_only': True},
+        }
+
+
+class BusinessTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessType
+        fields = [
+            'id',
+            'name',
+            'description',
+        ]
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
+
+
+class InspectionPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InspectionPlan
+        fields = [
+            'id',
+            'inspection_date',
+            'sample_needed',
+            'violate',
+            'id_premise',
+            'id_sample',
+        ]
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
+
+
+class SampleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sample
+        fields = [
+            'id',
+            'id_premise',
+            'accreditation_premise',
+            'accreditation_status',
+            'result_date',
+            'result_valid',
+        ]
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
+
+
+class AreaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Area
+        fields = [
+            'id',
+            'name',
+            'type',
+        ]
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
 
