@@ -68,10 +68,10 @@ class PremiseSerializer(serializers.ModelSerializer):
             'id_certificate': {'required': False},
         }
 
-    def create(self, validated_data):
-        if 'id_certificate' in validated_data:
-            validated_data.pop('id_certificate')
-        return super().create(validated_data)
+    # def create(self, validated_data):
+    #     if 'id_certificate' in validated_data:
+    #         validated_data.pop('id_certificate')
+    #     return super().create(validated_data)
 
 
 class CertificateSerializer(serializers.ModelSerializer):
@@ -83,6 +83,7 @@ class CertificateSerializer(serializers.ModelSerializer):
             'issued_date',
             'expired_date',
             'series',
+            'status',
         ]
         extra_kwargs = {
             'id': {'read_only': True},
@@ -113,6 +114,7 @@ class InspectionPlanSerializer(serializers.ModelSerializer):
             'violate',
             'id_premise',
             'id_sample',
+            'status',
         ]
         extra_kwargs = {
             'id': {'read_only': True},

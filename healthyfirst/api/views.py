@@ -1,3 +1,7 @@
+import os.path
+
+from django.http import HttpResponse, QueryDict
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -6,6 +10,8 @@ from healthyfirst.api.serializers import PersonSerializer, PremiseSerializer, Ce
 from healthyfirst.api.models import Person, Premise, Certificate, BusinessType, InspectionPlan, Sample, Area
 from healthyfirst.api.permissions import PersonPermission, PremisePermission, CertificatePermission, \
     BusinessTypePermission, InspectionPlanPermission, SamplePermission, AreaPermission
+from healthyfirst.utils.gen_form import GenForm
+from healthyfirst.utils.pdf import PDF
 
 
 class PersonViewSet(viewsets.ModelViewSet):
@@ -83,3 +89,22 @@ class AreaViewSet(viewsets.ModelViewSet):
     serializer_class = AreaSerializer
     queryset = Area.objects.all()
     permission_classes = [IsAuthenticated, AreaPermission]
+
+
+@csrf_exempt
+def generate_form(request, cert_id):
+
+    # data = QueryDict(request.body).dict()
+    cert_instance = Certificate.objects.get(id=cert_id)
+    pdf_path = cert_instance.file_path
+    if pdf_path is None or pdf_path == '' or os.path.isfile(pdf_path):
+        pdf_path = GenForm(cert_id=cert_id).gen_file()
+        cert_instance.file_path = pdf_path
+        cert_instance.save()
+    with open(pdf_path, 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'inline;filename=some_file.pdf'
+        return response
+    # response = HttpResponse(pdf.output(), content_type='application/pdf')
+    # response['Content-Disposition'] = "attachment; filename='file_name.pdf'"
+    # return response

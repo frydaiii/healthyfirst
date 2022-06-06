@@ -13,7 +13,6 @@ class Person(auth_models.AbstractUser):
 
 
 class Premise(base_models.Model):
-    # id = base_models.IntegerField(primary_key=True)
     name = base_models.CharField(max_length=255)
     address = base_models.CharField(max_length=255)
     phone_number = base_models.IntegerField()
@@ -23,30 +22,29 @@ class Premise(base_models.Model):
 
 
 class Certificate(base_models.Model):
-    # id = base_models.IntegerField(primary_key=True)
     id_business_type = base_models.IntegerField()
     issued_date = base_models.DateField(auto_now=True)
     expired_date = base_models.DateField()
     series = base_models.CharField(max_length=10)
+    status = base_models.CharField(null=True, blank=True, max_length=255)
+    file_path = base_models.CharField(null=True, blank=True, max_length=255)
 
 
 class BusinessType(base_models.Model):
-    # id = base_models.IntegerField(primary_key=True)
     name = base_models.CharField(max_length=50)
     description = base_models.CharField(max_length=255)
 
 
 class InspectionPlan(base_models.Model):
-    # id = base_models.IntegerField(primary_key=True)
     inspection_date = base_models.DateField()
     sample_needed = base_models.BooleanField(default=False)
     violate = base_models.BooleanField(default=False)
+    status = base_models.CharField(null=True, blank=True, max_length=255)
     id_premise = base_models.IntegerField()
     id_sample = base_models.IntegerField(null=True)
 
 
 class Sample(base_models.Model):
-    # id = base_models.IntegerField(primary_key=True)
     id_premise = base_models.IntegerField()
     accreditation_premise = base_models.CharField(max_length=255)
     accreditation_status = base_models.CharField(max_length=255)
@@ -55,6 +53,5 @@ class Sample(base_models.Model):
 
 
 class Area(base_models.Model):
-    # id = base_models.IntegerField(primary_key=True)
     name = base_models.CharField(max_length=255)
     type = base_models.CharField(max_length=255)
