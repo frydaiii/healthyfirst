@@ -50,6 +50,13 @@ class PersonSerializer(serializers.ModelSerializer):
 
         return user
 
+    def update(self, instance, validated_data):
+        user = super().update(instance, validated_data)
+        if validated_data['password'] is not None or validated_data['password'] != '':
+            user.set_password(validated_data['password'])
+            user.save()
+        return user
+
 
 class PremiseSerializer(serializers.ModelSerializer):
     class Meta:
